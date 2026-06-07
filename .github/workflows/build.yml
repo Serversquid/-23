@@ -1,0 +1,32 @@
+name: Build EXE
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Kody al
+        uses: actions/checkout@v4
+
+      - name: Python gurna
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Dependency-leri gurna
+        run: pip install -r requirements.txt
+
+      - name: EXE ýasama
+        run: |
+          pyinstaller --onefile --noconsole --name "GLOSA_3D_Sim" glosa_3d_sim.py
+
+      - name: EXE-ni ýükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: GLOSA_3D_Sim_EXE
+          path: dist/GLOSA_3D_Sim.exe
